@@ -1,0 +1,42 @@
+﻿@page "/simpleform"
+
+<PageTitle>TestPage</PageTitle>
+<h3>Einfaches Formular</h3>
+
+<EditForm Model="userInput" OnValidSubmit="HandleSubmit" FormName="test">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="inputText">Text eingeben</label>
+        <InputText id="inputText" class="form-control" @bind-Value="userInput.InputText" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Absenden</button>
+</EditForm>
+
+
+@if (submittedText != null)
+{
+    <p>Du hast eingegeben: @submittedText</p>
+}
+
+@code {
+    private UserInputModel userInput = new UserInputModel();
+    private string? submittedText;
+
+    protected override void OnInitialized()
+    {
+        userInput.InputText = "Hello World!";
+    }
+
+    private void HandleSubmit()
+    {
+        submittedText = userInput.InputText;
+    }
+
+    public class UserInputModel
+    {
+        public string? InputText { get; set; }
+    }
+}
